@@ -28,6 +28,9 @@
     "serverless": "1.32.0"
   },
   "dependencies": {
-    "aws-sdk": "2.307.0"
+    "aws-sdk": "2.307.0",
+    "hbase": "0.4.2",
+    "avro-js": "1.8.2",
+    "avsc": "5.4.7"
   }
 }

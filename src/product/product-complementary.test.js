@@ -20,7 +20,7 @@ test('should return statusCode 200 with body when product complementary exists',
   const request = {
     request_uri_args: {
       domain: 'microvix',
-      cnpj: '10504766000167',
+      cnpj: '10504766000168',
       gtin: '7909422433355'
     }
   };
