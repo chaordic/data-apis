@@ -1,0 +1,66 @@
+[
+	{
+		"type": "record",
+		"name": "ProductRecommended",
+		"namespace": "com.linx.ds.productrecommendation.productrecommended",
+		"fields": [
+			{"name": "name", "type": "string"},
+			{"name": "gtin", "type": "string"},
+			{"name": "ranking", "type": "int"}
+		]
+	},
+	{
+		"type": "record",
+		"name": "ProductRecommendationV1",
+		"namespace": "com.linx.ds.productrecommendation",
+		"fields":[
+			{
+				"name": "buildDateTime",
+				"type": {"type": "long", "logicalType": "timestamp-millis"}
+			},
+			{
+				"name": "version",
+				"type": "string"
+			},
+			{
+				"name": "algorithm",
+				"type": "string"
+			},
+			{
+				"name": "domain",
+				"type": "string"
+			},
+			{
+				"name": "store",
+				"type": {
+					"type": "record",
+					"name": "StoreRecord",
+					"fields": [
+						{"name": "name", "type": "string"},
+						{"name": "cnpj", "type": "string"}
+					]
+				}
+			},
+			{
+				"name": "product",
+				"type": {
+					"type": "record",
+					"name": "ProductRecord",
+					"fields": [
+						{"name": "name", "type": "string"},
+						{"name": "gtin", "type": "string"}
+					]
+				}
+			},
+			{
+				"name": "recommendedProducts",
+				"type": {
+					"type": "array",
+					"items": "com.linx.ds.productrecommendation.productrecommended"
+				}
+			}
+		]
+	}
+]
+
+

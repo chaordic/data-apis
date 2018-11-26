@@ -5,7 +5,7 @@
     "product-prod": "cd src/product && SLS_DEBUG=* serverless deploy --stage prod -v",
     "eslint": "eslint $(git ls-files '*.js')",
     "eclint": "eclint check $(git ls-files)",
-    "test": "jest test/*"
+    "test": "jest src/**/*"
   },
   "repository": {
     "type": "git",

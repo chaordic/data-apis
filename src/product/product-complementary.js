@@ -1,3 +1,6 @@
+const productComplementarySchema = require('./product-complementary-schema.json');
+
 exports.handler = async ({ request_uri_args: args }) => {
-	return null
+	console.log(productComplementarySchema);
+	return {statusCode: 200};
 };

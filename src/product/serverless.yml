@@ -26,4 +26,5 @@ functions:
     handler: product-complementary.handler
     package:
       include:
+        - product-complementary-schema.json
         - product-complementary.js
