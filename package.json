@@ -39,6 +39,9 @@
     "aws-sdk": "2.307.0"
   },
   "dependencies": {
-    "product": "file:src/product"
+    "product": "file:src/product",
+    "axios": "0.18.0",
+    "aws-sdk": "2.307.0",
+    "avsc": "5.4.7"
   }
 }
