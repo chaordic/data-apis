@@ -1,7 +1,7 @@
 [![airbnb-style](https://img.shields.io/badge/eslint-airbnb-4B32C3.svg)](https://github.com/airbnb/javascript)
 
-# Data APIs
-Data APIs receives requests from Kong (only with valid JWT) and foward to our services.
+# Mealstrom APIs
+A bunch of AWS lambdas called by Kong (only with valid JWT) working as APIs that receives an object with request_uri_args attribute and returns an object with statusCode and body attributes.
 
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -10,23 +10,23 @@ These instructions will get you a copy of the project up and running on your loc
   - Node.js v8+
   - NPM
 
-### Installing
+### Installing dev dependencies
 ```bash
-npm install
+npm run install-all
 ```
 
 ## Deployment
 
-It will deploy all functions to AWS Lambda. You can either choose DEV or PROD environments.
+It will deploy each function to AWS Lambda. You can either choose DEV or PROD environments.
 
 ### DEV
 ```bash
-npm run dev
+npm run deploy-product-dev
 ```
 
 ### PROD
 ```bash
-npm run prod
+npm run deploy-product-prod
 ```
 
 ## Tests
@@ -56,12 +56,12 @@ You can invoke functions directly from your terminal without opening AWS console
 ### Invoke
 ```bash
 npx serverless invoke -f <function> -p data-mock/<file>.json
-# <function> is the function name.
+# <function> is the function name. By now the only available function is 'customer'
 # <file> is the name of the file for the input event. You can create custom inputs to test your invocations.
 ```
 
 ### Logs
 ```bash
 npx serverless logs -f <function>
-# <function> is the function name.
+# <function> is the function name. By now the only available function is 'customer'
 ```

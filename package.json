@@ -1,22 +1,30 @@
 {
-  "name": "data-apis",
+  "name": "mealstrom-api",
+  "version": "1.0.0",
+  "description": "[![CircleCI](https://circleci.com/gh/chaordic/mealstrom-api/tree/master.svg?style=svg&circle-token=TOKEN)](https://circleci.com/gh/chaordic/mealstrom-api/tree/master) [![airbnb-style](https://img.shields.io/badge/eslint-airbnb-4B32C3.svg)](https://github.com/airbnb/javascript)",
+  "main": "index.js",
   "scripts": {
-    "dev": "SLS_DEBUG=* serverless deploy -v",
-    "prod": "SLS_DEBUG=* serverless deploy --stage prod -v",
+    "install-all": "npm i && npm run install-product",
+    "install-product": "cd src/product && npm i --only=production && cd ../..",
+    "deploy-product-dev": "npm run install-product && cd src/product && SLS_DEBUG=* serverless deploy -v",
+    "deploy-product-prod": "npm run install-product && cd src/product && SLS_DEBUG=* serverless deploy --stage prod -v",
+    "metrics-dev": "cd src/metrics && SLS_DEBUG=* serverless deploy -v",
+    "metrics-prod": "cd src/metrics && SLS_DEBUG=* serverless deploy --stage prod -v",
     "eslint": "eslint $(git ls-files '*.js')",
     "eclint": "eclint check $(git ls-files)",
-    "test": "jest test/*"
+    "test": "jest $(git ls-files '*.js')"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/chaordic/data-apis.git"
+    "url": "git+https://github.com/chaordic/mealstrom-api.git"
   },
-  "author": "datalake@chaordicsystems.com",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/chaordic/data-apis/issues"
+    "url": "https://github.com/chaordic/mealstrom-api/issues"
   },
-  "homepage": "https://github.com/chaordic/data-apis#readme",
+  "homepage": "https://github.com/chaordic/mealstrom-api#readme",
   "devDependencies": {
     "eclint": "2.8.0",
     "eslint": "5.5.0",
@@ -24,10 +32,10 @@
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-jest": "21.22.0",
     "jest": "23.5.0",
-    "npm-check-updates": "2.14.2",
-    "serverless": "1.30.3"
+    "serverless": "1.32.0",
+    "aws-sdk": "2.307.0"
   },
   "dependencies": {
-    "aws-sdk": "2.307.0"
+    "product": "file:src/product"
   }
 }

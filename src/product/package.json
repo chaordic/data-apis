@@ -1,0 +1,13 @@
+{
+  "name": "product",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "hbase": "0.4.2",
+    "avro-js": "1.8.2"
+  }
+}

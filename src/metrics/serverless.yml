@@ -1,0 +1,32 @@
+service:
+  name: data-api-metrics
+
+provider: 
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, 'dev'}
+  deploymentBucket: ${self:service.name}-deploy
+  memorySize: 128
+  timeout: 3
+  environment:
+    RECS_API_ENV: ${self:provider.stage}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "cloudwatch:PutMetricData"
+      Resource:
+        - "*"
+
+package:
+  exclude:
+    - "**/**"
+  individually: true
+
+functions:
+  metrics:
+    name: data-api-metrics
+    handler: ../metrics/metrics.handler
+    package:
+      include:
+        - ../metrics/metrics.js
+        - ../utils/cloudwatch-utils.js

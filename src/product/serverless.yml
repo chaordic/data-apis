@@ -1,0 +1,39 @@
+service:
+  name: datalake-recs-api
+
+provider: 
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, 'dev'}
+  deploymentBucket: ${self:service.name}-deploy
+  memorySize: 128
+  timeout: 10
+  environment:
+    RECS_API_ENV: ${self:provider.stage}
+  vpc:
+    securityGroupIds:
+      - sg-066d9216f85924c46
+    subnetIds:
+      - subnet-0d770250
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "cloudwatch:PutMetricData"
+      Resource:
+        - "*"
+
+package:
+  exclude:
+    - "**/**"
+  individually: true
+
+functions:
+  product:
+    name: datalake-recs-api-${self:provider.stage}-product
+    handler: product/index.handler
+    package:
+      include:
+        - ../product/index.js
+        - ../product/product-rec-schema.json
+        - ../utils/lambda-utils.js
+        - node_modules/**
