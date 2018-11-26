@@ -1,0 +1,33 @@
+{
+  "name": "data-apis",
+  "scripts": {
+    "dev": "SLS_DEBUG=* serverless deploy -v",
+    "prod": "SLS_DEBUG=* serverless deploy --stage prod -v",
+    "eslint": "eslint $(git ls-files '*.js')",
+    "eclint": "eclint check $(git ls-files)",
+    "test": "jest test/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chaordic/data-apis.git"
+  },
+  "author": "datalake@chaordicsystems.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chaordic/data-apis/issues"
+  },
+  "homepage": "https://github.com/chaordic/data-apis#readme",
+  "devDependencies": {
+    "eclint": "2.8.0",
+    "eslint": "5.5.0",
+    "eslint-config-airbnb-base": "13.1.0",
+    "eslint-plugin-import": "2.14.0",
+    "eslint-plugin-jest": "21.22.0",
+    "jest": "23.5.0",
+    "npm-check-updates": "2.14.2",
+    "serverless": "1.30.3"
+  },
+  "dependencies": {
+    "aws-sdk": "2.307.0"
+  }
+}
