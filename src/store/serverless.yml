@@ -1,0 +1,26 @@
+service:
+  name: data-apis-stores
+ provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, 'dev'}
+  deploymentBucket: ${self:service.name}-deploy
+  memorySize: 128
+  timeout: 3
+  environment:
+    DATA_APIS_ENV: ${self:provider.stage}
+  vpc:
+    securityGroupIds:
+      - sg-066d9216f85924c46
+    subnetIds:
+      - subnet-0d770250
+ package:
+  exclude:
+    - "**/**"
+  individually: true
+ functions:
+  store-analysis:
+    handler: store-analysis.handler
+    package:
+      include:
+        - store-analysis.js
