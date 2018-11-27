@@ -77,12 +77,44 @@ npx serverless logs -f <function>
 ```
 
 ## Sample requests
+Export your API credentials to `LDAP_USER` and `LDAP_PASS` env variables.
+
 ### STORE ANALYTICS API
 ```
-curl --http1.1 -H 'Authorization: Bearer ${TOKEN}' 'https://analytics.datalake.chaordicsystems.com/v1/store/?startDate=2018-01-01&endDate=2018-01-11&cnpj=19669737000391&cnpj=27881371000186&domain=microvix' | jq .
+#get token
+export JWT_TOKEN_ANALYTICS=`curl --http1.1 -XPOST "https://analytics.datalake.chaordicsystems.com/v1/token" -d '{"username": "'"$LDAP_USER"'", "password": "'"$LDAP_PASS"'"}' -H 'Content-Type: application/json' | jq .token -r`
+
+#make requests
+
+#simple request with simgle cnpj, domain and day
+curl --http1.1 -H "Authorization: Bearer ${JWT_TOKEN_ANALYTICS}" "https://analytics.datalake.chaordicsystems.com/v1/store/?startDate=2018-01-02&endDate=2018-01-02&cnpj=00018084000190&domain=microvix" | jq .
+
+#more complex request with multiple cnpjs, domains and a range of dates
+curl --http1.1 -H "Authorization: Bearer ${JWT_TOKEN_ANALYTICS}" "https://analytics.datalake.chaordicsystems.com/v1/store/?startDate=2018-01-01&endDate=2018-01-11&cnpj=00018084000190&cnpj=97519672000140&cnpj=97519750000297&domain=microvix&domain=mide" | jq .
+
+#interesting request, it's the request above beautyfied below, showing sales difference in the same cnpj but different domains
+curl --http1.1 -H "Authorization: Bearer ${JWT_TOKEN_ANALYTICS}" "https://analytics.datalake.chaordicsystems.com/v1/store/?startDate=2018-01-01&endDate=2018-01-11&cnpj=00018084000190&cnpj=97519672000140&cnpj=97519750000297&domain=microvix&domain=mide" | jq '.[] | {"cnpj": .cnpj, "domain": .domain, "startDate": .startDate, "endDate": .endDate, "sum_of_sale_total_value": .sum_of_sale_total_value, "max_of_sale_total_value": .max_of_sale_total_value, "min_of_sale_total_value": .min_of_sale_total_value, "count_of_sales": .count_of_sales}'
 ```
 
 ### PRODUCT RECS API
 ```
-curl --http1.1 -H 'Authorization: Bearer ${TOKEN}' 'https://recs.datalake.chaordicsystems.com/v1/product/?domain=mide&algorithm=FPGrowth&cnpj=83817858006373&gtin=7891444030417' | jq .
+#get token
+export JWT_TOKEN_RECS=`curl --http1.1 -XPOST "https://recs.datalake.chaordicsystems.com/v1/token" -d '{"username": "'"$LDAP_USER"'", "password": "'"$LDAP_PASS"'"}' -H 'Content-Type: application/json' | jq .token -r`
+
+#make requests
+
+#rodape
+curl --http1.1 -H "Authorization: Bearer ${JWT_TOKEN_RECS}" "https://recs.datalake.chaordicsystems.com/v1/product/?domain=mide&cnpj=83817858006705&gtin=7891444030622" | jq .
+
+#bota
+curl --http1.1 -H "Authorization: Bearer ${JWT_TOKEN_RECS}" "https://recs.datalake.chaordicsystems.com/v1/product/?domain=microvix&cnpj=11076356000206&gtin=7909422841822" | jq .
+
+#tenis
+curl --http1.1 -H "Authorization: Bearer ${JWT_TOKEN_RECS}" "https://recs.datalake.chaordicsystems.com/v1/product/?domain=microvix&cnpj=05852069000167&gtin=7909347941133" | jq .
+
+#cha
+curl --http1.1 -H "Authorization: Bearer ${JWT_TOKEN_RECS}" "https://recs.datalake.chaordicsystems.com/v1/product/?domain=microvix&cnpj=00954224001295&gtin=7898909639758" | jq .
+
+#loçao corporal
+curl --http1.1 -H "Authorization: Bearer ${JWT_TOKEN_RECS}" "https://recs.datalake.chaordicsystems.com/v1/product/?domain=microvix&cnpj=21297226000176&gtin=3614270665509" | jq .
 ```
