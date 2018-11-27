@@ -11,13 +11,13 @@ const prestoClient = new PrestoClient({
 });
 
 const askAnalysis = (startDate, endDate, cnpjs, domains) => {
-	if (cnpjs.length > 500) {
-		throw 'Not allowed, you can query at most 500 cnpjs';
+  if (cnpjs.length > 500) {
+    throw 'Not allowed, you can query at most 500 cnpjs';
   }
 
-	const cnpjsInClause = cnpjs.map(c => `'${c}'`).join(",");
-	const domainInClause = domains.map(d => `'${d}'`).join(",");
-	const yearMonthFilter = buildYearMonthFilter(startDate, endDate);
+  const cnpjsInClause = cnpjs.map(c => `'${c}'`).join(",");
+  const domainInClause = domains.map(d => `'${d}'`).join(",");
+  const yearMonthFilter = buildYearMonthFilter(startDate, endDate);
 
   const stmt = `
     SELECT
@@ -83,35 +83,35 @@ const askAnalysis = (startDate, endDate, cnpjs, domains) => {
 
   return prestoClient
     .sendStatement(stmt)
-		.then((result) => {
-			console.log(result)
+    .then((result) => {
+      console.log(result)
 
-			const allAnaly = []
-			let i, j
-			for (i = 0; i < result.data.length; i++) {
-				const cnpjAnaly = {}
-				for (j = 0; j < result.data[i].length; j++) {
-					cnpjAnaly[result.columns[j].name] = result.data[i][j]
-				}
-				allAnaly.push(cnpjAnaly)
-			}
-			console.log(allAnaly)
+      const allAnaly = []
+      let i, j
+      for (i = 0; i < result.data.length; i++) {
+        const cnpjAnaly = {}
+        for (j = 0; j < result.data[i].length; j++) {
+          cnpjAnaly[result.columns[j].name] = result.data[i][j]
+        }
+        allAnaly.push(cnpjAnaly)
+      }
+      console.log(allAnaly)
       return allAnaly;
-		})
-		.catch((error) => {
-			console.error({ error })
-		});
+    })
+    .catch((error) => {
+      console.error({ error })
+    });
 };
 
 const buildYearMonthFilter = (startDate, endDate) => {
-	const start = moment(startDate, 'YYYY-MM')
-	const end   = moment(endDate, 'YYYY-MM')
-	const range = moment.range(start, end)
+  const start = moment(startDate, 'YYYY-MM')
+  const end   = moment(endDate, 'YYYY-MM')
+  const range = moment.range(start, end)
 
-	const arrayOfDates = Array.from(range.by('months'))
-	const yearMonthFilter = arrayOfDates.map(x => `(year = ${x.year()} and month = ${x.month() + 1})`).join(" or ")
+  const arrayOfDates = Array.from(range.by('months'))
+  const yearMonthFilter = arrayOfDates.map(x => `(year = ${x.year()} and month = ${x.month() + 1})`).join(" or ")
 
-	return yearMonthFilter
+  return yearMonthFilter
 };
 
 exports.handler = async ({ request_uri_args: args }) => {
