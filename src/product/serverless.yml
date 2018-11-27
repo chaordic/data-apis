@@ -1,7 +1,7 @@
 service:
   name: datalake-recs-api
 
-provider: 
+provider:
   name: aws
   runtime: nodejs8.10
   stage: ${opt:stage, 'dev'}
@@ -28,9 +28,9 @@ package:
 functions:
   product:
     name: datalake-recs-api-${self:provider.stage}-product
-    handler: product/index.handler
+    handler: product/product-complementary.handler
     package:
       include:
-        - ../product/index.js
-        - ../product/product-rec-schema.json
+        - ../product/product-complementary-schema.avsc
+        - ../product/product-complementary.js
         - node_modules/**

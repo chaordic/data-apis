@@ -1,3 +1,4 @@
+[![CircleCI](https://circleci.com/gh/chaordic/data-apis.svg?style=svg&circle-token=fc5cbcbeabe529c37b1acb0e667c00987ad7599c)](https://circleci.com/gh/chaordic/data-apis)
 [![airbnb-style](https://img.shields.io/badge/eslint-airbnb-4B32C3.svg)](https://github.com/airbnb/javascript)
 
 # Data APIs

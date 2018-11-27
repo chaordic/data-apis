@@ -1,0 +1,100 @@
+{
+  "type": "record",
+  "name": "topLevelRecord",
+  "fields": [
+    {
+      "name": "buildDateTime",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    },
+    {
+      "name": "version",
+      "type": "string"
+    },
+    {
+      "name": "algorithm",
+      "type": "string"
+    },
+    {
+      "name": "domain",
+      "type": "string"
+    },
+    {
+      "name": "store",
+      "type": {
+        "type": "record",
+        "name": "store",
+        "namespace": "topLevelRecord",
+        "fields": [
+          {
+            "name": "name",
+            "type": ["null", "string"],
+            "default": null
+          },
+	  {
+            "name": "brand",
+            "type": ["null", "string"],
+            "default": null
+          },
+          {
+            "name": "cnpj",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "product",
+      "type": {
+        "type": "record",
+        "name": "product",
+        "namespace": "topLevelRecord",
+        "fields": [
+          {
+            "name": "name",
+            "type": ["null", "string"],
+            "default": null
+          },
+          {
+            "name": "gtin",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "recommendedProducts",
+      "type":
+        {
+          "type": "array",
+          "items":
+            {
+              "type": "record",
+              "name": "recommendedProduct",
+              "namespace": "recommendedProduct",
+              "fields": [
+                {
+                  "name": "ranking",
+                  "type": "int"
+                },
+                {
+                  "name": "weight",
+                  "type": "double"
+                },
+                {
+                  "name": "gtin",
+                  "type": "string"
+                },
+                {
+                  "name": "name",
+                  "type": ["null","string"],
+                  "default": null
+                }
+              ]
+            }
+        }
+    }
+  ]
+}
