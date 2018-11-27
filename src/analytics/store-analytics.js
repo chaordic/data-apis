@@ -11,8 +11,8 @@ const prestoClient = new PrestoClient({
 });
 
 const askAnalysis = (startDate, endDate, cnpjs, domains) => {
-  if (cnpjs.length > 500) {
-    throw 'Not allowed, you can query at most 500 cnpjs';
+  if (cnpjs.length > 250) {
+    throw 'Not allowed, you can query at most 200 cnpjs';
   }
 
   const cnpjsInClause = cnpjs.map(c => `'${c}'`).join(",");
@@ -76,7 +76,7 @@ const askAnalysis = (startDate, endDate, cnpjs, domains) => {
     order by
       st.cnpj, s.domain
     limit
-      500
+      2000
   `;
 
   console.log(stmt);
