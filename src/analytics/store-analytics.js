@@ -10,13 +10,14 @@ const prestoClient = new PrestoClient({
   user: 'datalake-analytics-api'
 });
 
-const askAnalysis = (startDate, endDate, cnpjs, domain) => {
-	if (cnpjs.length > 500) {
-		throw 'Not allowed, you can query at most 500 cnpjs';
+const askAnalysis = (startDate, endDate, cnpjs, domains) => {
+  if (cnpjs.length > 200) {
+    throw 'Not allowed, you can query at most 200 cnpjs';
   }
 
-	const cnpjsInClause = cnpjs.map(c => `'${c}'`).join(",");
-	const yearMonthFilter = buildYearMonthFilter(startDate, endDate);
+  const cnpjsInClause = cnpjs.map(c => `'${c}'`).join(",");
+  const domainInClause = domains.map(d => `'${d}'`).join(",");
+  const yearMonthFilter = buildYearMonthFilter(startDate, endDate);
 
   const stmt = `
     SELECT
@@ -61,11 +62,9 @@ const askAnalysis = (startDate, endDate, cnpjs, domain) => {
     join
       hive.dw.stores st on st.storeid = s.sellerStoreId
     where
-      channel = 'offline'
+      domain in (${domainInClause})
     and
-      domain = '${domain}'
-    and
-      documentstatus = 'confirmed'
+      (documentstatus = 'confirmed' or documentstatus is null)
     and
       st.cnpj in (${cnpjsInClause})
     and
@@ -74,43 +73,44 @@ const askAnalysis = (startDate, endDate, cnpjs, domain) => {
       ${yearMonthFilter}
     group by
       st.cnpj, s.domain, s.documentStatus
+    order by
+      st.cnpj, s.domain
     limit
-      ${cnpjs.length}
+      2000
   `;
 
   console.log(stmt);
 
   return prestoClient
     .sendStatement(stmt)
-		.then((result) => {
-			console.log(result)
+    .then((result) => {
+      console.log(result)
 
-			const allAnaly = []
-			let i, j
-			for (i = 0; i < result.data.length; i++) {
-				const cnpjAnaly = {}
-				for (j = 0; j < result.data[i].length; j++) {
-					cnpjAnaly[result.columns[j].name] = result.data[i][j]
-				}
-				allAnaly.push(cnpjAnaly)
-			}
-			console.log(allAnaly)
+      const allAnaly = []
+      for (let i = 0; i < result.data.length; i++) {
+        const cnpjAnaly = {}
+        for (let j = 0; j < result.data[i].length; j++) {
+          cnpjAnaly[result.columns[j].name] = result.data[i][j]
+        }
+        allAnaly.push(cnpjAnaly)
+      }
+      console.log(allAnaly)
       return allAnaly;
-		})
-		.catch((error) => {
-			console.error({ error })
-		});
+    })
+    .catch((error) => {
+      console.error({ error })
+    });
 };
 
 const buildYearMonthFilter = (startDate, endDate) => {
-	const start = moment(startDate, 'YYYY-MM')
-	const end   = moment(endDate, 'YYYY-MM')
-	const range = moment.range(start, end)
+  const start = moment(startDate, 'YYYY-MM')
+  const end   = moment(endDate, 'YYYY-MM')
+  const range = moment.range(start, end)
 
-	const arrayOfDates = Array.from(range.by('months'))
-	const yearMonthFilter = arrayOfDates.map(x => `(year = ${x.year()} and month = ${x.month() + 1})`).join(" or ")
+  const arrayOfDates = Array.from(range.by('months'))
+  const yearMonthFilter = arrayOfDates.map(x => `(year = ${x.year()} and month = ${x.month() + 1})`).join(" or ")
 
-	return yearMonthFilter
+  return yearMonthFilter
 };
 
 exports.handler = async ({ request_uri_args: args }) => {
@@ -121,8 +121,9 @@ exports.handler = async ({ request_uri_args: args }) => {
   try {
     const { startDate, endDate, cnpj, domain } = args;
     const cnpjs = [].concat(cnpj);
+    const domains = [].concat(domain);
 
-    const analysis = await askAnalysis(startDate, endDate, cnpjs, domain);
+    const analysis = await askAnalysis(startDate, endDate, cnpjs, domains);
     response.body = analysis;
   } catch (exception) {
     console.log(exception);
