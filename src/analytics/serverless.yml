@@ -1,5 +1,5 @@
 service:
-  name: datalake-recs-api
+  name: datalake-analytics-api
 
 provider: 
   name: aws
@@ -27,10 +27,9 @@ package:
 
 functions:
   product:
-    name: datalake-recs-api-${self:provider.stage}-product
-    handler: product/index.handler
+    name: datalake-analytics-api-${self:provider.stage}-store
+    handler: analytics/index.handler
     package:
       include:
-        - ../product/index.js
-        - ../product/product-rec-schema.json
+        - ../analytics/index.js
         - node_modules/**

@@ -1,6 +1,6 @@
 [![airbnb-style](https://img.shields.io/badge/eslint-airbnb-4B32C3.svg)](https://github.com/airbnb/javascript)
 
-# Mealstrom APIs
+# Data APIs
 A bunch of AWS lambdas called by Kong (only with valid JWT) working as APIs that receives an object with request_uri_args attribute and returns an object with statusCode and body attributes.
 
 ## Getting Started
@@ -19,14 +19,24 @@ npm run install-all
 
 It will deploy each function to AWS Lambda. You can either choose DEV or PROD environments.
 
-### DEV
+### PRODUCT RECS API DEV
 ```bash
 npm run deploy-product-dev
 ```
 
-### PROD
+### PRODUCT RECS API PROD
 ```bash
 npm run deploy-product-prod
+```
+
+### STORE ANALYTICS API DEV
+```bash
+npm run deploy-analytics-dev
+```
+
+### STORE ANALYTICS API PROD
+```bash
+npm run deploy-analytics-prod
 ```
 
 ## Tests
@@ -49,7 +59,6 @@ It will check for file structure, such as tabs/spaces, end of file and so on. Ch
 npm run eclint
 ```
 
-
 ## Invoking
 You can invoke functions directly from your terminal without opening AWS console and also check its logs.
 
@@ -64,4 +73,15 @@ npx serverless invoke -f <function> -p data-mock/<file>.json
 ```bash
 npx serverless logs -f <function>
 # <function> is the function name. By now the only available function is 'customer'
+```
+
+## Sample requests
+### STORE ANALYTICS API
+```
+curl --http1.1 -H 'Authorization: Bearer ${TOKEN}' 'https://recs.datalake.chaordicsystems.com/v1/product/?startDate=2018-01-01&endDate=2018-01-11&cnpj=19669737000391&cnpj=27881371000186&domain=microvix' | jq .
+```
+
+### PRODUCT RECS API
+```
+curl --http1.1 -H 'Authorization: Bearer ${TOKEN}' 'https://recs.datalake.chaordicsystems.com/v1/product/?domain=mide&algorithm=FPGrowth&cnpj=83817858006373&gtin=7891444030417' | jq .
 ```

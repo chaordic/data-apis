@@ -1,0 +1,14 @@
+{
+  "name": "analytics",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.22.2",
+    "moment-range": "^4.0.1",
+    "prestodb": "^0.2.0"
+  }
+}

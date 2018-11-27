@@ -1,6 +1,5 @@
 const hbase = require('hbase');
 const avro = require('avro-js');
-const Lambda = require('../utils/lambda-utils.js');
 const recAvroSchema = require('./product-rec-schema.json');
 
 const hbaseClient = hbase({ host: 'hbase-rest.datalake.chaordicsystems.com', port: 80 });
