@@ -1,0 +1,17 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: library/node:8-alpine
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install dependencies
+          command: npm run install-all
+
+      - run:
+          name: Unit tests
+          command: npm test
