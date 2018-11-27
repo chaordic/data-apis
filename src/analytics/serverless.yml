@@ -7,7 +7,7 @@ provider:
   stage: ${opt:stage, 'dev'}
   deploymentBucket: ${self:service.name}-deploy
   memorySize: 128
-  timeout: 180
+  timeout: 180 #depois da apresentação a gente diminui
   vpc:
     securityGroupIds:
       - sg-066d9216f85924c46
@@ -29,6 +29,11 @@ functions:
   product:
     name: datalake-analytics-api-${self:provider.stage}-store
     handler: analytics/store-analytics.handler
+    tags:
+      team: datalake
+      env: prod
+      chaordic:role: data-apis
+      chaordic:product: data-apis-store-analytics
     package:
       include:
         - ../analytics/store-analytics.js
