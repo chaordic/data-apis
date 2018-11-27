@@ -29,6 +29,11 @@ functions:
   product:
     name: datalake-recs-api-${self:provider.stage}-product
     handler: product/product-complementary.handler
+    tags:
+      team: datalake
+      env: prod
+      chaordic:role: data-apis
+      chaordic:product: data-apis-product-recs
     package:
       include:
         - ../product/product-complementary-schema.avsc
