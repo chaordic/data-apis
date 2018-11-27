@@ -78,7 +78,7 @@ npx serverless logs -f <function>
 ## Sample requests
 ### STORE ANALYTICS API
 ```
-curl --http1.1 -H 'Authorization: Bearer ${TOKEN}' 'https://recs.datalake.chaordicsystems.com/v1/product/?startDate=2018-01-01&endDate=2018-01-11&cnpj=19669737000391&cnpj=27881371000186&domain=microvix' | jq .
+curl --http1.1 -H 'Authorization: Bearer ${TOKEN}' 'https://analytics.datalake.chaordicsystems.com/v1/store/?startDate=2018-01-01&endDate=2018-01-11&cnpj=19669737000391&cnpj=27881371000186&domain=microvix' | jq .
 ```
 
 ### PRODUCT RECS API
