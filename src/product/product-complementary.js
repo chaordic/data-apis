@@ -19,7 +19,7 @@ exports.handler = async ({ request_uri_args: args }) => {
 		const productComplementaryBinary = Buffer.from(value, 'base64')
 		const productComplementaryStr = parser.fromBuffer(productComplementaryBinary);
 
-		response.body = JSON.stringify(productComplementaryStr);
+		response.body = productComplementaryStr;
 		response.statusCode = 200;
 
 	} catch (exception) {
