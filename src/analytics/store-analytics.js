@@ -62,11 +62,9 @@ const askAnalysis = (startDate, endDate, cnpjs, domains) => {
     join
       hive.dw.stores st on st.storeid = s.sellerStoreId
     where
-      channel = 'offline'
-    and
       domain in (${domainInClause})
     and
-      documentstatus = 'confirmed'
+      (documentstatus = 'confirmed' or documentstatus is null)
     and
       st.cnpj in (${cnpjsInClause})
     and
@@ -75,8 +73,10 @@ const askAnalysis = (startDate, endDate, cnpjs, domains) => {
       ${yearMonthFilter}
     group by
       st.cnpj, s.domain, s.documentStatus
+		sort by
+		  st.cnpj, s.domain
     limit
-      ${cnpjs.length}
+      500
   `;
 
   console.log(stmt);
