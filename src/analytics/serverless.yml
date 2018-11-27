@@ -1,13 +1,13 @@
 service:
   name: datalake-analytics-api
 
-provider: 
+provider:
   name: aws
   runtime: nodejs8.10
   stage: ${opt:stage, 'dev'}
   deploymentBucket: ${self:service.name}-deploy
   memorySize: 128
-  timeout: 10
+  timeout: 180
   vpc:
     securityGroupIds:
       - sg-066d9216f85924c46
@@ -28,8 +28,8 @@ package:
 functions:
   product:
     name: datalake-analytics-api-${self:provider.stage}-store
-    handler: analytics/index.handler
+    handler: analytics/store-analytics.handler
     package:
       include:
-        - ../analytics/index.js
+        - ../analytics/store-analytics.js
         - node_modules/**

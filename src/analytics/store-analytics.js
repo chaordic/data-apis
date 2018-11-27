@@ -10,12 +10,13 @@ const prestoClient = new PrestoClient({
   user: 'datalake-analytics-api'
 });
 
-const askAnalysis = (startDate, endDate, cnpjs, domain) => {
+const askAnalysis = (startDate, endDate, cnpjs, domains) => {
 	if (cnpjs.length > 500) {
 		throw 'Not allowed, you can query at most 500 cnpjs';
   }
 
 	const cnpjsInClause = cnpjs.map(c => `'${c}'`).join(",");
+	const domainInClause = domains.map(d => `'${d}'`).join(",");
 	const yearMonthFilter = buildYearMonthFilter(startDate, endDate);
 
   const stmt = `
@@ -63,7 +64,7 @@ const askAnalysis = (startDate, endDate, cnpjs, domain) => {
     where
       channel = 'offline'
     and
-      domain = '${domain}'
+      domain in (${domainInClause})
     and
       documentstatus = 'confirmed'
     and
@@ -121,8 +122,9 @@ exports.handler = async ({ request_uri_args: args }) => {
   try {
     const { startDate, endDate, cnpj, domain } = args;
     const cnpjs = [].concat(cnpj);
+    const domains = [].concat(domain);
 
-    const analysis = await askAnalysis(startDate, endDate, cnpjs, domain);
+    const analysis = await askAnalysis(startDate, endDate, cnpjs, domains);
     response.body = analysis;
   } catch (exception) {
     console.log(exception);
