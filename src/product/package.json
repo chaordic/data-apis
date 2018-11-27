@@ -2,12 +2,12 @@
   "name": "product",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "product-complementary.js",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "hbase": "0.4.2",
-    "avro-js": "1.8.2"
+    "axios": "0.18.0",
+    "avsc": "5.4.7"
   }
 }

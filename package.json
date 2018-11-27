@@ -1,8 +1,8 @@
 {
-  "name": "mealstrom-api",
+  "name": "data-apis",
   "version": "1.0.0",
-  "description": "[![CircleCI](https://circleci.com/gh/chaordic/mealstrom-api/tree/master.svg?style=svg&circle-token=TOKEN)](https://circleci.com/gh/chaordic/mealstrom-api/tree/master) [![airbnb-style](https://img.shields.io/badge/eslint-airbnb-4B32C3.svg)](https://github.com/airbnb/javascript)",
-  "main": "index.js",
+  "description": "Linx data APIs with post processed data",
+  "main": "",
   "scripts": {
     "install-all": "npm i && npm run install-product && npm run install-analytics",
     "install-product": "cd src/product && npm i --only=production && cd ../..",
@@ -39,9 +39,6 @@
     "aws-sdk": "2.307.0"
   },
   "dependencies": {
-    "product": "file:src/product",
-    "axios": "0.18.0",
-    "aws-sdk": "2.307.0",
-    "avsc": "5.4.7"
+    "product": "file:src/product"
   }
 }

@@ -1,13 +1,12 @@
 {
   "type": "record",
   "name": "topLevelRecord",
-	"namespace": "",
   "fields": [
     {
       "name": "buildDateTime",
       "type": {
         "type": "long",
-        "logicalType": "timestamp-micros"
+        "logicalType": "timestamp-millis"
       }
     },
     {
@@ -20,10 +19,7 @@
     },
     {
       "name": "domain",
-      "type": [
-        "string",
-        "null"
-      ]
+      "type": "string"
     },
     {
       "name": "store",
@@ -34,17 +30,17 @@
         "fields": [
           {
             "name": "name",
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["null", "string"],
+            "default": null
+          },
+	  {
+            "name": "brand",
+            "type": ["null", "string"],
+            "default": null
           },
           {
             "name": "cnpj",
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": "string"
           }
         ]
       }
@@ -58,17 +54,12 @@
         "fields": [
           {
             "name": "name",
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["null", "string"],
+            "default": null
           },
           {
             "name": "gtin",
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": "string"
           }
         ]
       }
@@ -78,27 +69,28 @@
       "type":
         {
           "type": "array",
-          "items": {
+          "items":
+            {
               "type": "record",
-              "name": "recommendedProducts",
-              "namespace": "topLevelRecord",
+              "name": "recommendedProduct",
+              "namespace": "recommendedProduct",
               "fields": [
                 {
                   "name": "ranking",
                   "type": "int"
                 },
                 {
+                  "name": "weight",
+                  "type": "double"
+                },
+                {
                   "name": "gtin",
-                  "type": [
-                    "string"
-                  ]
+                  "type": "string"
                 },
                 {
                   "name": "name",
-                  "type": [
-                    "string",
-                    "null"
-                  ]
+                  "type": ["null","string"],
+                  "default": null
                 }
               ]
             }
