@@ -73,8 +73,8 @@ const askAnalysis = (startDate, endDate, cnpjs, domains) => {
       ${yearMonthFilter}
     group by
       st.cnpj, s.domain, s.documentStatus
-		sort by
-		  st.cnpj, s.domain
+    order by
+      st.cnpj, s.domain
     limit
       500
   `;
