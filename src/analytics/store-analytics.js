@@ -79,13 +79,9 @@ const askAnalysis = (startDate, endDate, cnpjs, domains) => {
       2000
   `;
 
-  console.log(stmt);
-
   return prestoClient
     .sendStatement(stmt)
     .then((result) => {
-      console.log(result)
-
       const allAnaly = []
       for (let i = 0; i < result.data.length; i++) {
         const cnpjAnaly = {}
@@ -94,7 +90,6 @@ const askAnalysis = (startDate, endDate, cnpjs, domains) => {
         }
         allAnaly.push(cnpjAnaly)
       }
-      console.log(allAnaly)
       return allAnaly;
     })
     .catch((error) => {
@@ -108,7 +103,13 @@ const buildYearMonthFilter = (startDate, endDate) => {
   const range = moment.range(start, end)
 
   const arrayOfDates = Array.from(range.by('months'))
-  const yearMonthFilter = arrayOfDates.map(x => `(year = ${x.year()} and month = ${x.month() + 1})`).join(" or ")
+
+  let yearMonthFilter;
+  if (arrayOfDates.length <= 1) {
+    yearMonthFilter = arrayOfDates.map(x => ` (year = ${x.year()} and month = ${x.month() + 1}) `).join(" ");
+  } else {
+    yearMonthFilter = ' 1=1 ';
+  }
 
   return yearMonthFilter
 };
