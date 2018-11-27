@@ -68,7 +68,7 @@ const askAnalysis = (startDate, endDate, cnpjs, domains) => {
     and
       st.cnpj in (${cnpjsInClause})
     and
-      datetime between date('${startDate}') and date('${endDate}')
+      datetime between date('${startDate}') and date_add('day', 1, date('${endDate}'))
     and
       ${yearMonthFilter}
     group by
