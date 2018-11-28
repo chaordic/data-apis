@@ -1,6 +1,12 @@
 [![CircleCI](https://circleci.com/gh/chaordic/data-apis.svg?style=svg&circle-token=fc5cbcbeabe529c37b1acb0e667c00987ad7599c)](https://circleci.com/gh/chaordic/data-apis)
 [![airbnb-style](https://img.shields.io/badge/eslint-airbnb-4B32C3.svg)](https://github.com/airbnb/javascript)
 
+# ✟ ♱ RIP - IT'S A POC, it must be destroyed in the future ☦ ✟
+* Project created for an apresentation to Linx P&D
+* Need to re-think this project
+* It's running in two AWS lambdas but this code isn't product ready (but it can be accessed by Linx guys and it's on linx share).
+
+
 # Data APIs
 A bunch of AWS lambdas called by Kong (only with valid JWT) working as APIs that receives an object with request_uri_args attribute and returns an object with statusCode and body attributes.
 
