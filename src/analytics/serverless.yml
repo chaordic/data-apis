@@ -7,7 +7,7 @@ provider:
   stage: ${opt:stage, 'dev'}
   deploymentBucket: ${self:service.name}-deploy
   memorySize: 128
-  timeout: 180 #depois da apresentação a gente diminui
+  timeout: 60
   vpc:
     securityGroupIds:
       - sg-066d9216f85924c46
