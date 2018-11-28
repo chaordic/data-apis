@@ -1,10 +1,10 @@
 [![CircleCI](https://circleci.com/gh/chaordic/data-apis.svg?style=svg&circle-token=fc5cbcbeabe529c37b1acb0e667c00987ad7599c)](https://circleci.com/gh/chaordic/data-apis)
 [![airbnb-style](https://img.shields.io/badge/eslint-airbnb-4B32C3.svg)](https://github.com/airbnb/javascript)
 
-# ✟ ♱ RIP - IT'S A POC, it must be destroyed in the future ☦ ✟
+# ✟ ♱ RIP - IT'S A POC, it must be destroyed ☦ ✟
+* **It's running in two AWS lambdas and it's in linx share, so linx guys may be testing it.**
 * Project created for an apresentation to Linx P&D
-* Need to re-think this project
-* It's running in two AWS lambdas but this code isn't product ready (but it can be accessed by Linx guys and it's on linx share).
+* Need to re-think this APIs - lambda may not be a good idea
 
 
 # Data APIs
